@@ -1,0 +1,13 @@
+package com.example.jwtlearn;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class JwtlearnApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(JwtlearnApplication.class, args);
+    }
+
+}
