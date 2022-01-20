@@ -1,6 +1,9 @@
 package com.example.jwtlearn.services;
 
-import org.springframework.security.core.userdetails.User;
+import com.example.jwtlearn.model.CustomUserDetails;
+import com.example.jwtlearn.model.User;
+import com.example.jwtlearn.repo.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +13,9 @@ import java.util.ArrayList;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
+
+    @Autowired
+    private UserRepository userRepo;
 
     String username="foo";
     String password="foo";
@@ -22,6 +28,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        return new User(username,password,new ArrayList<>());
+        User user = userRepo.findByUsername(username);
+
+        if(user == null)
+            throw new UsernameNotFoundException("User Not found");
+
+        return new CustomUserDetails(user);
     }
 }
